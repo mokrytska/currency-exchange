@@ -1,7 +1,7 @@
 <template>
   <fragment>
     <div class="wrapper">
-      <input v-model="sourceAmount" type="number" class="border"/>
+      <input v-model="sourceAmount" type="number" class="border" @input="countSourceAmount"/>
       <select
         class="select border"
         name="select"
@@ -12,7 +12,7 @@
           {{ item }}
         </option>
       </select>
-      <input type="number" v-model="outputAmount" class="border"/>
+      <input type="number" v-model="outputAmount" class="border" @input="countOutputAmount"/>
       <select
         class="select border"
         name="select"
@@ -42,14 +42,16 @@ export default {
   methods: {
     async getData() {
       let response = await fetch(
-        'https://freecurrencyapi.net/api/v2/latest?apikey=9F9ek9MUGlgme5ZL0aXF4uPvcfMeldaeyJs1HNWO', {mode: 'no-cors'}
+        'http://data.fixer.io/api/latest?access_key=242a73e7af5805300c09c43d84915340'
       );
       let json = await response.json();
-      this.currency = json.data;
+       console.log(json);
+      this.currency = json.rates;
+      console.log(this.currency);
       console.log(Object.keys(this.currency));
       this.currencyItems = Object.keys(this.currency);
-      this.sourceCurrency = this.currencyItems[138];
-      this.outputCurrency = this.currencyItems[45];
+      this.sourceCurrency = this.currencyItems[147];
+      this.outputCurrency = this.currencyItems[46];
       console.log(this.currencyItems.sort());
       return json;
     },
